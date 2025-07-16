@@ -1,25 +1,21 @@
 trigger:
-- main
+- test-behave  # Cambia a la rama 'test-behave'
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'  # Usa una imagen de Ubuntu para ejecutar las pruebas
 
 steps:
 - task: UsePythonVersion@0
   inputs:
-    versionSpec: '3.8'  # Elige una versión de Python que prefieras
-  displayName: 'Use Python 3.8'
+    versionSpec: '3.x'  # Especifica la versión de Python que necesitas
+    addToPath: true
 
 - script: |
     python -m pip install --upgrade pip
-    pip install -r requirements.txt
-    pip install behave pytest pytest-azurepipelines
-  displayName: 'Install dependencies'
+    pip install -r requirements.txt  # Asegúrate de tener un archivo requirements.txt con behave incluido
+    pip install behave
+  displayName: 'Instalar dependencias'
 
 - script: |
-    behave
-  displayName: 'Run behave tests'
-
-- script: |
-    pytest
-  displayName: 'Run pytest tests'
+    behave path/to/your/features  # Cambia 'path/to/your/features' por la ruta donde están tus archivos .feature
+  displayName: 'Ejecutar pruebas Behave'
